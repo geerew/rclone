@@ -157,12 +157,14 @@ func ClientWithHeaderReset(c *http.Client, headers map[string]string) *http.Clie
 		if len(via) >= 10 {
 			return errors.New("stopped after 10 redirects")
 		}
+		
+		// Do not reset headers 
 		// Reset the headers in the new request
-		for k, v := range headers {
-			if v != "" {
-				req.Header.Set(k, v)
-			}
-		}
+		//for k, v := range headers {
+		//	if v != "" {
+		//		req.Header.Set(k, v)
+		//	}
+		//}
 		return nil
 	}
 	return &clientCopy
