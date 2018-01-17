@@ -13,6 +13,8 @@ const (
 	timeFormat = time.RFC1123
 	// Fri, 05 Jan 2018 14:14:38 +0000 (as used by mydrive.ch)
 	timeFormatZ = time.RFC1123Z
+	// Wed May 17 15:31:58 UTC 2017
+	timeFormatU = time.UnixDate
 )
 
 // Multistatus contains responses returned from an HTTP 207 return code
@@ -144,7 +146,10 @@ func (t *Time) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	if err != nil {
 		newT, err = time.Parse(timeFormatZ, v)
 		if err != nil {
-			return err
+			newT, err = time.Parse(timeFormatU, v)
+                	if err != nil {
+                        	return err
+                	}
 		}
 	}
 	*t = Time(newT)
